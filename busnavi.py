@@ -15,6 +15,7 @@ delta = 5
 
 def arrival_check(target_dir, bus_number, delta, h, m):
 
+	# バスの時刻表csvを読み込む
 	timetable = []
 
 	with open(target_dir + '/' + str(bus_number) + '.csv', 'r') as f:
@@ -25,8 +26,7 @@ def arrival_check(target_dir, bus_number, delta, h, m):
 
 	# 時間(h)判定
 	if h == 0 or h > len(timetable):
-		print 'no'
-		exit
+		return ''
 
 	# 時間(m)判定
 	arrival_list = timetable[h-1]
