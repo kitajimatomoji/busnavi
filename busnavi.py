@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import subprocess
 import csv
 import time
 from datetime import datetime
@@ -10,7 +11,7 @@ alarm_message_list = []
 
 # 何分前にアラーム鳴らすか（5分）
 delta = 5
-
+home_dir = '/home/pi/busnavi/busnavi/'
 
 
 def arrival_check(target_dir, bus_number, delta, h, m):
@@ -38,6 +39,9 @@ def arrival_check(target_dir, bus_number, delta, h, m):
 			return str(delta) + "分後にバスが来ます。" + str(bus_number) + '系統です。'
 
 	return ''
+
+def aques_talk(message, voice):
+	subprocess.call('/home/pi/aquestalkpi/AquesTalkPi -v ' + voice + ' "' + message + '"|aplay', shell=True)	
 
 
 
@@ -71,17 +75,17 @@ if is_satureday:
 if is_holyday:
 	target_dir = "holiday"
 
-
+target_dir = home_dir + target_dir
 message = arrival_check(target_dir, 31, delta, currenttime_H, currenttime_M)
 if message != '':
-	alarm_message_list.append(message)
+	alarm_message_list.append([message, 'f1'])
 
 message = arrival_check(target_dir, 25, delta, currenttime_H, currenttime_M)
 if message != '':
-	alarm_message_list.append(message)
+	alarm_message_list.append([message, 'f2'])
 
 for alarm_message in alarm_message_list:
-	print alarm_message
+	aques_talk(alarm_message[0], alarm_message[1])
 
 
 
