@@ -33,7 +33,7 @@ def arrival_check(target_dir, bus_number, delta, h, m):
 	arrival_list = timetable[h-1]
 	print arrival_list
 	m_padded = '{0:02d}'.format(m)
-	print m_padded
+
 	for arrival in arrival_list:
 		if arrival == m_padded:
 			return str(delta) + "分後にバスが来ます。" + str(bus_number) + '系統です。'
